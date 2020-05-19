@@ -1,0 +1,15 @@
+version: '3'
+services:
+  dynamodb:
+    image: "amazon/dynamodb-local:1.12.0"
+    ports:
+      - "8000:8000"
+  
+  dynamodb-seed:
+    image: "amazon/aws-cli:2.0.14"
+    entrypoint: /bin/sh -c "/root/entrypoint.sh"
+    volumes: 
+      - ~/.aws:/root/.aws
+      - ./entrypoint.sh:/root/entrypoint.sh
+    depends_on: 
+      - dynamodb
